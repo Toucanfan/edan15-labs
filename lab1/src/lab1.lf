@@ -44,5 +44,5 @@ main reactor {
     snk = new Sink()
     src.out -> slen.in
     slen.out -> snk.in
-    slen.out2 -> slen.in2
+    slen.out2 -> slen.in2 after 0 sec;
 }
