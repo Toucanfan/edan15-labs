@@ -1,0 +1,24 @@
+target C
+
+reactor Source {
+    output out: int
+    reaction(startup) -> out {=
+        lf_set(out, 123);
+    =}
+}
+
+reactor Sink {
+    input in: int
+    reaction(in) {=
+        printf("Sink: Got input: %d\n", in->value);
+    =}
+}
+
+main reactor {
+    reaction(startup) {=
+        printf("Hello world!\n");
+    =}
+    src = new Source()
+    snk = new Sink()
+    src.out -> snk.in
+}
