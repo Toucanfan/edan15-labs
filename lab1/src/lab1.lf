@@ -5,10 +5,15 @@ target C {
 
 reactor StringLength {
     input in: string
+    input in2: int
     output out: int
+    output out2: int
     reaction(in) -> out {=
         #include <string.h>
         lf_set(out, strlen(in->value));
+    =}
+    reaction(in2) -> out2 {=
+        lf_set(out2, in2->value);
     =}
 }
 
@@ -39,4 +44,5 @@ main reactor {
     snk = new Sink()
     src.out -> slen.in
     slen.out -> snk.in
+    slen.out2 -> slen.in2
 }
