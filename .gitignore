@@ -1,0 +1,6 @@
+src-gen/
+bin/
+include/
+*.svg
+*.tar.gz
+lf-tools/
