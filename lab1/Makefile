@@ -1,5 +1,8 @@
 .PHONY: clean run compile diagram
 
+LFC ?= lfc
+LFD ?= lfd
+
 MAIN = lab1
 
 compile: diagram src/$(MAIN).lf

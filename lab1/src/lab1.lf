@@ -1,12 +1,22 @@
+
 target C {
      timeout: 3 sec
 }
 
-reactor Source {
+reactor StringLength {
+    input in: string
     output out: int
+    reaction(in) -> out {=
+        #include <string.h>
+        lf_set(out, strlen(in->value));
+    =}
+}
+
+reactor Source {
+    output out: string
     timer tim(0, 1 sec)
     reaction(tim) -> out {=
-        lf_set(out, 123);
+        lf_set(out, "Yo!");
     =}
 }
 
@@ -25,6 +35,8 @@ main reactor {
         printf("Good bye!\n");
     =}
     src = new Source()
+    slen = new StringLength()
     snk = new Sink()
-    src.out -> snk.in
+    src.out -> slen.in
+    slen.out -> snk.in
 }
