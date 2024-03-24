@@ -8,12 +8,18 @@ reactor StringLength {
     input in2: int
     output out: int
     output out2: int
+    state accum_len: int = 0
     reaction(in) -> out {=
         #include <string.h>
-        lf_set(out, strlen(in->value));
+        int len = strlen(in->value);
+        lf_set(out, len);
+        self->accum_len += len;
     =}
     reaction(in2) -> out2 {=
         lf_set(out2, in2->value);
+    =}
+    reaction(shutdown) {=
+        printf("StringLength: Total accumulated length: %d\n", self->accum_len);
     =}
 }
 
