@@ -1,8 +1,11 @@
-target C
+target C {
+     timeout: 3 sec
+}
 
 reactor Source {
     output out: int
-    reaction(startup) -> out {=
+    timer tim(0, 1 sec)
+    reaction(tim) -> out {=
         lf_set(out, 123);
     =}
 }
@@ -17,6 +20,9 @@ reactor Sink {
 main reactor {
     reaction(startup) {=
         printf("Hello world!\n");
+    =}
+    reaction(shutdown) {=
+        printf("Good bye!\n");
     =}
     src = new Source()
     snk = new Sink()
